@@ -11,12 +11,13 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { EnrollForm } from "./Enroll";
 export default function Header() {
   const pathname = usePathname();
   const [isOpen, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   // Handle scroll effect for header styling
   useEffect(() => {
     const handleScroll = () => {
@@ -84,9 +85,20 @@ export default function Header() {
               Sign in
             </Button>
           </Link>
-          <Link href={"/construction"}>
-            <Button className="bg-blue-600 hover:bg-blue-700">Get Started</Button>
-          </Link>
+          <Button
+        className="bg-blue-600 hover:bg-blue-700"
+        onClick={() => setIsDialogOpen(true)}
+      >
+        Get Started
+      </Button>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Enrollment Form</DialogTitle>
+          </DialogHeader>
+          <EnrollForm />
+        </DialogContent>
+      </Dialog>
         </div>
 
         <div className="flex lg:hidden">
@@ -111,14 +123,15 @@ export default function Header() {
             ))}
 
             {/* Mobile Buttons */}
-            <div className="flex flex-col space-y-2 pt-4 border-t">
+            {/* <div className="flex flex-col space-y-2 pt-4 border-t">
               <Button variant="outline" className="w-full text-blue-600">
                 Sign in
               </Button>
-              <Button className="w-full bg-blue-600 hover:bg-blue-700">Get Started</Button>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => setOpen(!isOpen)}>Get Started</Button>
+             */}
             </div>
           </div>
-        </div>
+        
       )}
     </header>
   );

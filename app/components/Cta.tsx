@@ -1,8 +1,16 @@
+"use client";
+
+import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { MoveRight, PhoneCall } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { EnrollForm } from "./Enroll";
 
-export const CTA1 = () => (
+export const CTA1 = () =>{
+  
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+  return (
  <div id="contact" className="w-full py-10 lg:py-20 transform scale-90">
   <div className="container mx-auto">
     <div className="flex flex-col text-center bg-muted rounded-md p-4 lg:p-14 gap-8 items-center">
@@ -21,11 +29,21 @@ export const CTA1 = () => (
         <Button className="gap-4" variant="outline">
           Schedule a Visit <PhoneCall className="w-4 h-4" />
         </Button>
-        <Button className="gap-4">
+        <Button className="gap-4"    onClick={() => setIsDialogOpen(true)}>
           Enroll Now <MoveRight className="w-4 h-4" />
         </Button>
+        
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Enrollment Form</DialogTitle>
+          </DialogHeader>
+          <EnrollForm />
+        </DialogContent>
+      </Dialog>
       </div>
     </div>
   </div>
 </div>
-);
+)
+};
