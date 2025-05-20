@@ -1,11 +1,16 @@
-// components/EnrollForm.tsx
+
 "use client";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
+interface EnrollmentFormErrors {
+  parentsname?: string;
+  studentname?: string;
+  phone?: string;
+  std?: string;
+}
 export const EnrollForm = () => {
   const [formData, setFormData] = useState({
     parentsname: "",
@@ -14,19 +19,23 @@ export const EnrollForm = () => {
     std: "",
   });
 
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+const [errors, setErrors] = useState<EnrollmentFormErrors>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const validateForm = () => {
-    const newErrors: any = {};
-    if (!formData.parentsname) newErrors.parentsname = "Parent's name is required.";
-    if (!formData.studentname) newErrors.studentname = "Student's name is required.";
-    if (!formData.phone || isNaN(Number(formData.phone))) newErrors.phone = "Valid phone number is required.";
-    if (!formData.std) newErrors.std = "Class/Standard is required.";
-    setErrors(newErrors);
+ 
+
+const newErrors: EnrollmentFormErrors = {};
+
+if (!formData.parentsname) newErrors.parentsname = "Parents name is required.";
+if (!formData.studentname) newErrors.studentname = "Students name is required.";
+if (!formData.phone || isNaN(Number(formData.phone))) newErrors.phone = "Valid phone number is required.";
+if (!formData.std) newErrors.std = "Class/Standard is required.";
+
+setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
@@ -60,7 +69,7 @@ export const EnrollForm = () => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 py-2">
       <div>
-        <Label htmlFor="parentsname">Parent's Name</Label>
+        <Label htmlFor="parentsname">Parents Name</Label>
         <Input
           id="parentsname"
           name="parentsname"
@@ -72,7 +81,7 @@ export const EnrollForm = () => {
         )}
       </div>
       <div>
-        <Label htmlFor="studentname">Student's Name</Label>
+        <Label htmlFor="studentname">Students Name</Label>
         <Input
           id="studentname"
           name="studentname"
